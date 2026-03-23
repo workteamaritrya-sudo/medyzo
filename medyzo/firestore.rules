@@ -1,0 +1,35 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Sessions — only server (admin SDK) writes; deny direct client reads
+    match /sessions/{phone} {
+      allow read, write: if false;  // backend only via Admin SDK
+    }
+
+    // Doctors — public read (patient app needs this), admin write
+    match /doctors/{docId} {
+      allow read: if true;
+      allow write: if false; // backend only
+    }
+
+    // Appointments — patients can book (write their own), read their own
+    match /appointments/{apptId} {
+      allow read: if true;
+      allow write: if false; // backend only
+    }
+
+    // Settings — read-only public (clinic info shown in patient app)
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Reviews — anyone can write, read is public
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow write: if false; // backend only
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "projects": {
+    "default": "medyzo-6ebbc",
+    "hosting": "medyzo"
+  },
+  "targets": {
+    "medyzo": {
+      "hosting": {
+        "portal": ["medyzo"]
+      }
+    }
+  }
+}
